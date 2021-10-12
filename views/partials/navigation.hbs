@@ -1,0 +1,105 @@
+<ul class="nav navbar-nav navbar-right sidebar-menu">
+
+
+    {{#if session.user }}
+    <li>
+        <a href="{{ baseUrl }}/dashboards"><i class="fa fa-dashboard"></i>&nbsp;Dashboard</a>
+    </li>
+
+    <li class="dropdown ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i>&nbsp;Master Data <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{{ baseUrl }}/brands">
+                    <i class="fa fa-car"></i>&nbsp;Brand
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/categories">
+                    <i class="fa fa-tags"></i>&nbsp;Category
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/customers">
+                    <i class="fa fa-users"></i>&nbsp;Customers
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/products">
+                    <i class="fa fa-space-shuttle"></i>&nbsp;Product
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/suppliers">
+                    <i class="fa fa-truck"></i>&nbsp;Supplier
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/types">
+                    <i class="fa fa-rocket"></i>&nbsp;Types
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="{{ baseUrl }}/roles">
+                    <i class="fa fa-key"></i>&nbsp;Role
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/users">
+                    <i class="fa fa-user"></i>&nbsp;User
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="dropdown ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money"></i>&nbsp;Transaction <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{{ baseUrl }}/purchases">
+                    <i class="fa fa-cart-arrow-down"></i>&nbsp;Purchases
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/sales">
+                    <i class="fa fa-cart-plus"></i>&nbsp;Sales
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li>
+        <a href="{{ baseUrl }}/reports"><i class="fa fa-line-chart"></i>&nbsp;Report</a>
+    </li>
+
+    <li class="dropdown ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-plus"></i>&nbsp;{{ session.user.username }} <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{{ baseUrl }}/profiles">
+                    <i class="fa fa-user"></i>&nbsp;My Profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/change_password">
+                    <i class="fa fa-key"></i>&nbsp;Change Password
+                </a>
+            </li>
+            <li>
+                <a href="{{ baseUrl }}/logout">
+                    <i class="fa fa-sign-out"></i>&nbsp;Sign out
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    {{else}}
+    {{{block "nav-auth"}}}
+    {{/if}}
+
+</ul>

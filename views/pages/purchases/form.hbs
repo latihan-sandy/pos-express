@@ -1,0 +1,132 @@
+{{#contentFor "title"}}
+    {{title}}
+{{/contentFor}}
+
+<h1 class="page-header"> {{title}}
+    <small> Management</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li><a href="javascript:void(0);">Transaction</a></li>
+    <li><a href="{{listURL}}">{{title}}</a></li>
+    <li class="active"> Manage Transaction</li>
+</ol>
+
+ {{#if notice_message }}
+    <div class="alert alert-{{notice_type}} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <p class="text-left">{{{notice_message}}}</p>
+    </div>
+{{/if}}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-money"></i>&nbsp;<strong>Manage Transaction</strong>
+            </div>
+            <div class="pull-right">
+                <a href="{{listURL}}" class="btn btn-sm btn-primary">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                {{#if id }}
+                 <a href="{{createURL}}" class="btn btn-sm btn-success">
+                     <i class="fa fa-plus"></i>&nbsp;Create New
+                </a>
+                 <a href="{{deleteURL}}" class="btn btn-sm btn-danger" id="btn-delete-data">
+                    <i class="fa fa-trash"></i>&nbsp;Delete
+                </a>
+                <form id="form-delete" method="POST" action="{{deleteURL}}"></form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form method="POST" action="{{submitURL}}" class="" id="form-invoice" role="form" enctype="multipart/form-data">
+
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Date</label>
+                <input type="text" class="form-control" value="{{ data.invoice_date }}" readonly="readonly" />
+            </div>
+            
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Number</label>
+                <input type="text" class="form-control" value="{{ data.invoice_number }}" readonly="readonly" />
+            </div>
+            
+            <div class="form-group col-md-3">
+                <label for="name">Supplier</label>
+                <select name="supplier_id" id="supplier_id" data-selected="{{ data.supplier_id }}" class="select2 form-control">
+                    <option selected="selected" disabled>Select Supplier</option>
+                    {{#each suppliers}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            
+            <div class="form-group col-md-3">
+                <label for="name">Casheir</label>
+                <input type="text" class="form-control" value="{{ session.user.username }}" readonly="readonly" />
+            </div>
+            
+            <div class="clearfix"></div>
+
+            <div class="container-fluid table-responsive">
+                <table class="table" id="table-invoice">
+                    <thead>
+                        <tr>
+                            <th> Product</th>
+                            <th width="200">Price</th>
+                            <th width="90">Qty</th>
+                            <th width="200">Total</th>
+                            <th width="70">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-info" id="btn-add">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="clearfix"></div>
+            
+            <div class="form-group col-md-6">
+                <label for="name">Grandtotal</label>
+                <input type="number" step="any" id="grandtotal" name="grandtotal" class="form-control" value="{{ data.grandtotal }}" readonly="readonly" />
+            </div>
+            
+            <div class="clearfix"></div>
+            <hr>
+            
+            <div class="form-group">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i>&nbsp;Save & Finish
+                        </button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="reset" class="btn btn-warning">
+                            <i class="fa fa-refresh"></i>&nbsp;Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+{{#contentFor "scripts"}}
+   <script src="{{ baseUrl }}/static/scripts/purchases.js?{{getUUID}}"></script>
+{{/contentFor}}

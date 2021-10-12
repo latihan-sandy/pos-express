@@ -1,0 +1,104 @@
+{{#contentFor "title"}}
+{{title}}
+{{/contentFor}}
+
+<h1 class="page-header"> Report
+    <small>Transaction</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li class="active">Report</li>
+</ol>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-table"></i>&nbsp;<strong>List Of Report</strong>
+    </div>
+    <div class="panel-body">
+        <div class="container-fluid table-responsive">
+            <table class="table table-striped" id="table-data">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> <strong>Purchase By Period</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show" data-href="{{ baseUrl }}/reports/purchase/1/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Purchase By Supplier</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show" data-href="{{ baseUrl }}/reports/purchase/2/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Purchase By Product</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show"  data-href="{{ baseUrl }}/reports/purchase/3/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Sale By Period</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show"  data-href="{{ baseUrl }}/reports/sales/1/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Sale By Customer</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show" data-href="{{ baseUrl }}/reports/sales/2/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Sale By Product</strong> </td>
+                        <td> <a href="javascript:void(0);" class="btn btn-sm btn-success btn-report-show"  data-href="{{ baseUrl }}/reports/sales/3/{{ firstDate }}/{{ lastDate }}"> <i class="fa fa-search"></i> </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <i class="fa fa-line-chart"></i>&nbsp;Report Preview
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="baseUrl" value="{{ baseUrl }}" />
+                    <div class="form-group col-md-6">
+                        <label for="first_date">First Date:</label>
+                        <input type="text" class="form-control date-filter" id="first_date" value="{{ firstDate }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="last_date">Last Date:</label>
+                        <input type="text" class="form-control date-filter" id="last_date" value="{{ lastDate }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success" id="btn-print">
+                            <i class="fa fa-print"></i>&nbsp;Print Report
+                        </a>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+                <hr>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" id="iframe-report" src="{{ baseUrl }}"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+{{#contentFor "scripts"}}
+<script src="{{ baseUrl }}/static/scripts/reports.js?{{getUUID}}"></script>
+{{/contentFor}}

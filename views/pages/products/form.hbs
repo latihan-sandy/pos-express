@@ -1,0 +1,187 @@
+{{#contentFor "title"}}
+    {{title}}
+{{/contentFor}}
+
+<h1 class="page-header"> {{title}}
+    <small> Management</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li><a href="javascript:void(0);">Master</a></li>
+    <li><a href="{{listURL}}">{{title}}</a></li>
+     {{#if id }}
+        <li class="active"> Edit</li>
+      {{else}}
+        <li class="active"> Create</li>
+     {{/if}}
+</ol>
+
+ {{#if notice_message }}
+    <div class="alert alert-{{notice_type}} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <p class="text-left">{{{notice_message}}}</p>
+    </div>
+{{/if}}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                {{#if id }}
+                    <i class="fa fa-edit"></i>&nbsp;<strong>Edit Record</strong>
+                {{else}}
+                    <i class="fa fa-plus"></i>&nbsp;<strong>Create Record</strong>
+                {{/if}}
+            </div>
+            <div class="pull-right">
+                <a href="{{listURL}}" class="btn btn-sm btn-primary">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                {{#if id }}
+                 <a href="{{createURL}}" class="btn btn-sm btn-success">
+                     <i class="fa fa-plus"></i>&nbsp;Create New
+                </a>
+                 <a href="{{editURL}}" class="btn btn-sm btn-warning">
+                    <i class="fa fa-edit"></i>&nbsp;Edit Data
+                </a>
+                 <a href="{{deleteURL}}" class="btn btn-sm btn-danger" id="btn-delete-data">
+                    <i class="fa fa-trash"></i>&nbsp;Delete
+                </a>
+                <form id="form-delete" method="POST" action="{{deleteURL}}"></form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form method="POST" action="{{submitURL}}" class="form-horizontal" id="form-submit" role="form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sku">SKU :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="sku" name="sku" value="{{ data.sku }}" required="required">
+                </div>
+            </div>
+           <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Name :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" name="name" value="{{ data.name }}" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="image">Image :</label>
+                <div class="col-sm-10">
+                     <input type="file" class="file-input-image" id="file" name="file">
+                      {{#if data.image }}
+                         <input type="hidden" class="file-input-image-preview" value="{{ baseUrl }}/static/{{ data.image }}" />
+                      {{/if}}
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="brand_id">Brand :</label>
+                <div class="col-sm-10">
+                    <select name="brand_id" id="brand_id" data-selected="{{ data.brand_id }}" class="select2 form-control">
+                        <option selected="selected" disabled>Select Brand</option>
+                        {{#each brands}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="type_id">Type :</label>
+                <div class="col-sm-10">
+                    <select name="type_id" id="type_id" data-selected="{{ data.type_id }}" class="select2 form-control">
+                        <option selected="selected" disabled>Select Type</option>
+                        {{#each types}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="supplier_id">Supplier :</label>
+                <div class="col-sm-10">
+                    <select name="supplier_id" id="supplier_id" data-selected="{{ data.supplier_id }}" class="select2 form-control">
+                        <option selected="selected" disabled>Select Supplier</option>
+                        {{#each suppliers}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="categories">Categories :</label>
+                <div class="col-sm-10">
+                    <select name="categories[]" id="categories" data-selected="{{ categoriesSelected }}" class="select2 form-control multiple" multiple="multiple">
+                         {{#each categories}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="price_purchase">Price Purchase  :</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" id="price_purchase" name="price_purchase" value="{{ data.price_purchase }}">
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="price_profit">Profit (%)  :</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" id="price_profit" name="price_profit" value="{{ data.price_profit }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="price_sales">Price Sale  :</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" readonly="readonly" id="price_sales" name="price_sales" value="{{ data.price_sales }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="stock">Stock :</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" readonly="readonly" id="stock" name="stock" value="{{ data.stock }}">
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="date_expired">Date Expired :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control input-datepicker" id="date_expired" name="date_expired" value="{{ data.date_expired }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="description">Description :</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="description" name="description" rows="5">{{ data.description }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="notes">Notes :</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="notes" name="notes" rows="5">{{ data.notes }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                         {{#if id }}
+                          <i class="fa fa-edit"></i>&nbsp;Update
+                          {{else}}
+                          <i class="fa fa-save"></i>&nbsp;Save  
+                          {{/if}}
+                    </button>
+                    <button type="reset" class="btn btn-warning">
+                        <i class="fa fa-refresh"></i>&nbsp;Reset
+                    </button>
+                    <input type="hidden" name="created_at" id="created_at" />
+                    <input type="hidden" name="updated_at" id="updated_at" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+{{#contentFor "scripts"}}
+   <script src="{{ baseUrl }}/static/scripts/products.js?{{getUUID}}"></script>
+{{/contentFor}}
